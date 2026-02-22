@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Discount Lottery</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; background: #f4f4f4; padding: 50px 20px; }
+        .card { background: white; padding: 30px; border-radius: 20px; shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        h1 { color: #d32f2f; }
+        #result { font-size: 3rem; font-weight: bold; margin: 20px 0; color: #333; }
+        .btn { background: #d32f2f; color: white; padding: 15px 30px; border: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer; }
+        .note { font-size: 0.8rem; color: #777; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Tap to Win!</h1>
+        <p>Your daily discount at our stall:</p>
+        <div id="result">? %</div>
+        <button class="btn" id="spinBtn" onclick="drawLottery()">Reveal My Discount</button>
+        <p class="note">Show this screen at the counter to claim.</p>
+    </div>
+
+    <script>
+        function drawLottery() {
+            // Check if they already spun today
+            let saved = localStorage.getItem('myDiscount');
+            let win;
+
+            if (saved) {
+                win = saved;
+            } else {
+                // Probability: 70% get 10, 20% get 20, 10% get 30
+                const rand = Math.random();
+                if (rand < 0.7) win = "10%";
+                else if (rand < 0.9) win = "20%";
+                else win = "30%";
+                
+                localStorage.setItem('myDiscount', win);
+            }
+
+            document.getElementById('result').innerText = win;
+            document.getElementById('spinBtn').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
